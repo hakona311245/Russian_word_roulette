@@ -1,15 +1,36 @@
-import { useLayoutEffect, useRef } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { createScope, createTimeline, stagger } from "animejs";
 import { DeckProgress } from "./components/DeckProgress";
 import { FilterBar } from "./components/FilterBar";
+import { IntroLoader } from "./components/IntroLoader";
 import { PracticeCard } from "./components/PracticeCard";
 import { useSentenceDeck } from "./hooks/useSentenceDeck";
 import { usePrefersReducedMotion } from "./hooks/usePrefersReducedMotion";
+
+const INTRO_PLAY_MODE: "session" | "always" = "session";
+const INTRO_STORAGE_KEY = "russian-word-roulette:intro-seen";
+
+function shouldShowIntroOnLoad() {
+  if (INTRO_PLAY_MODE === "always") {
+    return true;
+  }
+
+  if (typeof window === "undefined") {
+    return true;
+  }
+
+  try {
+    return window.sessionStorage.getItem(INTRO_STORAGE_KEY) !== "true";
+  } catch {
+    return true;
+  }
+}
 
 export default function App() {
   const rootRef = useRef<HTMLElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const titleUnderlineRef = useRef<SVGPathElement | null>(null);
+  const [showIntro, setShowIntro] = useState(shouldShowIntroOnLoad);
   const prefersReducedMotion = usePrefersReducedMotion();
   const {
     currentSentence,
@@ -92,75 +113,95 @@ export default function App() {
     };
   }, [prefersReducedMotion]);
 
+  const handleIntroComplete = useCallback(() => {
+    if (INTRO_PLAY_MODE === "session") {
+      try {
+        window.sessionStorage.setItem(INTRO_STORAGE_KEY, "true");
+      } catch {
+        // Storage can fail in private modes; the intro should still dismiss.
+      }
+    }
+
+    setShowIntro(false);
+  }, []);
+
   return (
-    <main className="app-shell" ref={rootRef}>
-      <header className="study-header" aria-labelledby="app-title">
-        <div className="title-lockup">
-          <p className="study-identity__title">Translation practice</p>
-          <h1 className="written-title" id="app-title" ref={titleRef}>
-            <span className="title-word title-word--russian">Russian</span>{" "}
-            <span className="title-word title-word--roulette">Roulette</span>
-          </h1>
-          <svg
-            className="title-ink-line"
-            viewBox="0 0 360 28"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <path
-              ref={titleUnderlineRef}
-              d="M5 18 C 58 7, 108 22, 157 15 S 256 8, 355 17"
-            />
-          </svg>
-          <p
-            className="poster-subtitle"
-            aria-label="Read, translate, reveal, compare."
-          >
-            <span className="poster-subtitle__word" aria-hidden="true">
-              Read,
-            </span>{" "}
-            <span className="poster-subtitle__word" aria-hidden="true">
-              translate,
-            </span>{" "}
-            <span className="poster-subtitle__word" aria-hidden="true">
-              reveal,
-            </span>{" "}
-            <span className="poster-subtitle__word" aria-hidden="true">
-              compare.
-            </span>
-          </p>
-        </div>
+    <>
+      <main
+        className={`app-shell ${showIntro ? "app-shell--intro-active" : ""}`}
+        ref={rootRef}
+        aria-hidden={showIntro ? "true" : undefined}
+      >
+        <header className="study-header" aria-labelledby="app-title">
+          <div className="title-lockup">
+            <p className="study-identity__title">Translation practice</p>
+            <h1 className="written-title" id="app-title" ref={titleRef}>
+              <span className="title-word title-word--russian">Russian</span>{" "}
+              <span className="title-word title-word--roulette">Roulette</span>
+            </h1>
+            <svg
+              className="title-ink-line"
+              viewBox="0 0 360 28"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path
+                ref={titleUnderlineRef}
+                d="M5 18 C 58 7, 108 22, 157 15 S 256 8, 355 17"
+              />
+            </svg>
+            <p
+              className="poster-subtitle"
+              aria-label="Read, translate, reveal, compare."
+            >
+              <span className="poster-subtitle__word" aria-hidden="true">
+                Read,
+              </span>{" "}
+              <span className="poster-subtitle__word" aria-hidden="true">
+                translate,
+              </span>{" "}
+              <span className="poster-subtitle__word" aria-hidden="true">
+                reveal,
+              </span>{" "}
+              <span className="poster-subtitle__word" aria-hidden="true">
+                compare.
+              </span>
+            </p>
+          </div>
 
-        <DeckProgress
-          deckSize={deckSize}
-          remainingInPass={remainingInPass}
-          shownCount={shownCount}
-        />
-      </header>
-
-      <div className="study-layout">
-        <section className="control-rail" aria-label="Practice setup">
-          <FilterBar
-            filters={filters}
-            levels={levels}
-            onChange={updateFilters}
-            topics={topics}
-          />
-        </section>
-
-        <section className="practice-workspace" aria-label="Practice workspace">
-          {error ? <p className="error-message">{error}</p> : null}
-
-          <PracticeCard
-            isLoading={isLoading}
-            onNext={nextSentence}
+          <DeckProgress
+            deckSize={deckSize}
             remainingInPass={remainingInPass}
-            sentence={currentSentence}
-            sourceLanguage={filters.sourceLanguage}
-            targetLanguage={filters.targetLanguage}
+            shownCount={shownCount}
           />
-        </section>
-      </div>
-    </main>
+        </header>
+
+        <div className="study-layout">
+          <section className="control-rail" aria-label="Practice setup">
+            <FilterBar
+              filters={filters}
+              levels={levels}
+              onChange={updateFilters}
+              topics={topics}
+            />
+          </section>
+
+          <section className="practice-workspace" aria-label="Practice workspace">
+            {error ? <p className="error-message">{error}</p> : null}
+
+            <PracticeCard
+              isLoading={isLoading}
+              onNext={nextSentence}
+              remainingInPass={remainingInPass}
+              sentence={currentSentence}
+              sourceLanguage={filters.sourceLanguage}
+              targetLanguage={filters.targetLanguage}
+            />
+          </section>
+        </div>
+      </main>
+
+      {showIntro ? <IntroLoader onComplete={handleIntroComplete} /> : null}
+    </>
   );
 }
