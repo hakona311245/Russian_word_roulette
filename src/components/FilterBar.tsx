@@ -44,7 +44,7 @@ export function FilterBar({
 
   return (
     <PaperPanel className="filter-bar" aria-label="Practice filters">
-      <label>
+      <label className="filter-bar__control">
         <span>Source</span>
         <select
           value={filters.sourceLanguage}
@@ -60,7 +60,7 @@ export function FilterBar({
         </select>
       </label>
 
-      <label>
+      <label className="filter-bar__control">
         <span>Target</span>
         <select
           value={filters.targetLanguage}
@@ -76,7 +76,7 @@ export function FilterBar({
         </select>
       </label>
 
-      <label>
+      <label className="filter-bar__control">
         <span>Topic</span>
         <select
           value={filters.topic}
@@ -93,7 +93,7 @@ export function FilterBar({
         </select>
       </label>
 
-      <label>
+      <label className="filter-bar__control">
         <span>Level</span>
         <select
           value={filters.level}

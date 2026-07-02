@@ -3,12 +3,6 @@ import type { LanguageCode, Sentence } from "../types";
 import { PaperButton } from "./PaperButton";
 import { PaperPanel } from "./PaperPanel";
 
-const languageShortLabels: Record<LanguageCode, string> = {
-  vi: "VI",
-  en: "EN",
-  ru: "RU",
-};
-
 const languageDisplayLabels: Record<LanguageCode, string> = {
   vi: "Vietnamese",
   en: "English",
@@ -20,12 +14,10 @@ function vietnameseTextClass(language: LanguageCode) {
 }
 
 type PracticeCardProps = {
-  deckSize: number;
   isLoading: boolean;
   onNext: () => void;
   remainingInPass: number;
   sentence: Sentence | null;
-  shownCount: number;
   sourceLanguage: LanguageCode;
   targetLanguage: LanguageCode;
 };
@@ -43,8 +35,12 @@ function TargetTicketCard({
   targetSentence,
   targetSentenceClass,
 }: TargetTicketCardProps) {
+  const ticketStateClass = isRevealed
+    ? "target-ticket--revealed"
+    : "target-ticket--hidden";
+
   return (
-    <aside className="target-ticket" aria-live="polite">
+    <aside className={`target-ticket ${ticketStateClass}`} aria-live="polite">
       <div className="target-ticket__surface">
         <span className="section-label">{targetLabel}</span>
         {isRevealed ? (
@@ -53,7 +49,7 @@ function TargetTicketCard({
           </p>
         ) : (
           <p className="target-sentence target-sentence--hidden">
-            Reveal the reference translation when you are ready.
+            Write your attempt first, then reveal the reference.
           </p>
         )}
         <div className="ornamental-divider ornamental-divider--target" aria-hidden="true" />
@@ -68,12 +64,10 @@ function TargetTicketCard({
 }
 
 export function PracticeCard({
-  deckSize,
   isLoading,
   onNext,
   remainingInPass,
   sentence,
-  shownCount,
   sourceLanguage,
   targetLanguage,
 }: PracticeCardProps) {
@@ -107,7 +101,6 @@ export function PracticeCard({
 
   const sourceSentence = sentence[sourceLanguage];
   const targetSentence = sentence[targetLanguage];
-  const progressLabel = `${Math.min(shownCount, deckSize)} / ${deckSize}`;
   const sourceLabel = `Source (${languageDisplayLabels[sourceLanguage]})`;
   const targetLabel = `Target (${languageDisplayLabels[targetLanguage]})`;
   const sourceSentenceClass = [
@@ -122,13 +115,6 @@ export function PracticeCard({
 
   return (
     <PaperPanel className="practice-card">
-      <div className="practice-card__meta">
-        <span>{languageShortLabels[sourceLanguage]}</span>
-        <span>{sentence.topic.replace("-", " ")}</span>
-        <span>{sentence.level}</span>
-        <span>{progressLabel}</span>
-      </div>
-
       <div className="practice-card__grid">
         <section className="source-column" aria-label="Source sentence">
           <span className="section-label">{sourceLabel}</span>
@@ -147,17 +133,28 @@ export function PracticeCard({
 
           <div className="practice-card__actions">
             <p>
-              {remainingInPass === 0
-                ? "Next reshuffles the filtered deck."
-                : `${remainingInPass} left before reshuffle.`}
+              {isRevealed
+                ? remainingInPass === 0
+                  ? "Next reshuffles this deck."
+                  : `${remainingInPass} remaining after this card.`
+                : "Type your translation, then reveal the reference."}
             </p>
-            <div>
-              <PaperButton onClick={() => setIsRevealed((current) => !current)}>
-                {isRevealed ? "Hide" : "Reveal"}
-              </PaperButton>
-              <PaperButton variant="secondary" onClick={handleNext}>
-                Next -&gt;
-              </PaperButton>
+            <div className="practice-card__action-buttons">
+              {isRevealed ? (
+                <>
+                  <PaperButton
+                    variant="secondary"
+                    onClick={() => setIsRevealed(false)}
+                  >
+                    Hide
+                  </PaperButton>
+                  <PaperButton onClick={handleNext}>Next -&gt;</PaperButton>
+                </>
+              ) : (
+                <PaperButton onClick={() => setIsRevealed(true)}>
+                  Reveal
+                </PaperButton>
+              )}
             </div>
           </div>
         </section>
