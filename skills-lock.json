@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "animejs": {
+      "source": "bowtiedswan/animejs-skills",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "bbc725ed48342d96418a2953c34598fbaf5ead2959be6da3fe93c7e0109f30b4"
+    },
     "design-taste-frontend": {
       "source": "Leonxlnx/taste-skill",
       "sourceType": "github",
