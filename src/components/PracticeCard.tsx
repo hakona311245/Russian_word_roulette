@@ -131,7 +131,7 @@ export function PracticeCard({
       animate(textareaRef.current, {
         opacity: [0.72, 1],
         translateY: [4, 0],
-        duration: 540,
+        duration: 300,
         ease: "outSine",
       });
     });
@@ -153,16 +153,16 @@ export function PracticeCard({
 
     const sourceAnimation = animate(sourceSentenceRef.current, {
       opacity: [0, 1],
-      translateY: [10, 0],
-      filter: ["blur(2px)", "blur(0px)"],
-      duration: 760,
+      translateY: [7, 0],
+      filter: ["blur(1.5px)", "blur(0px)"],
+      duration: 460,
       ease: "outCubic",
     });
     const dividerAnimation = sourceDividerRef.current
       ? animate(sourceDividerRef.current, {
           opacity: [0.35, 1],
           scaleX: [0.96, 1],
-          duration: 680,
+          duration: 420,
           ease: "outSine",
         })
       : null;
@@ -243,7 +243,7 @@ export function PracticeCard({
         "inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 0 22px rgba(112, 73, 30, 0.08)",
         "inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 28px rgba(159, 36, 24, 0.11)",
       ],
-      duration: 420,
+      duration: 260,
       ease: "outSine",
     });
   }

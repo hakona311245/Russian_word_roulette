@@ -98,7 +98,8 @@ export default function App() {
         <div className="title-lockup">
           <p className="study-identity__title">Translation practice</p>
           <h1 className="written-title" id="app-title" ref={titleRef}>
-            Russian Roulette
+            <span className="title-word title-word--russian">Russian</span>{" "}
+            <span className="title-word title-word--roulette">Roulette</span>
           </h1>
           <svg
             className="title-ink-line"
@@ -137,27 +138,29 @@ export default function App() {
         />
       </header>
 
-      <section className="control-rail" aria-label="Practice setup">
-        <FilterBar
-          filters={filters}
-          levels={levels}
-          onChange={updateFilters}
-          topics={topics}
-        />
-      </section>
+      <div className="study-layout">
+        <section className="control-rail" aria-label="Practice setup">
+          <FilterBar
+            filters={filters}
+            levels={levels}
+            onChange={updateFilters}
+            topics={topics}
+          />
+        </section>
 
-      {error ? <p className="error-message">{error}</p> : null}
+        <section className="practice-workspace" aria-label="Practice workspace">
+          {error ? <p className="error-message">{error}</p> : null}
 
-      <section className="practice-workspace" aria-label="Practice workspace">
-        <PracticeCard
-          isLoading={isLoading}
-          onNext={nextSentence}
-          remainingInPass={remainingInPass}
-          sentence={currentSentence}
-          sourceLanguage={filters.sourceLanguage}
-          targetLanguage={filters.targetLanguage}
-        />
-      </section>
+          <PracticeCard
+            isLoading={isLoading}
+            onNext={nextSentence}
+            remainingInPass={remainingInPass}
+            sentence={currentSentence}
+            sourceLanguage={filters.sourceLanguage}
+            targetLanguage={filters.targetLanguage}
+          />
+        </section>
+      </div>
     </main>
   );
 }
