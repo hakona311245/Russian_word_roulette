@@ -1,0 +1,162 @@
+[
+  {
+    "id": "daily-a1-001",
+    "topic": "daily-life",
+    "level": "A1",
+    "vi": "Tôi uống trà vào buổi sáng.",
+    "en": "I drink tea in the morning.",
+    "ru": "Я пью чай утром."
+  },
+  {
+    "id": "daily-a1-002",
+    "topic": "daily-life",
+    "level": "A1",
+    "vi": "Cửa hàng ở gần nhà tôi.",
+    "en": "The shop is near my house.",
+    "ru": "Магазин находится рядом с моим домом."
+  },
+  {
+    "id": "daily-a2-003",
+    "topic": "daily-life",
+    "level": "A2",
+    "vi": "Sau bữa tối, chúng tôi thường đi bộ trong công viên.",
+    "en": "After dinner, we usually walk in the park.",
+    "ru": "После ужина мы обычно гуляем в парке."
+  },
+  {
+    "id": "daily-b1-004",
+    "topic": "daily-life",
+    "level": "B1",
+    "vi": "Tôi cố gắng đọc một bài báo ngắn mỗi ngày để học từ mới.",
+    "en": "I try to read a short article every day to learn new words.",
+    "ru": "Я стараюсь каждый день читать короткую статью, чтобы учить новые слова."
+  },
+  {
+    "id": "travel-a1-001",
+    "topic": "travel",
+    "level": "A1",
+    "vi": "Ga tàu ở đâu?",
+    "en": "Where is the train station?",
+    "ru": "Где находится вокзал?"
+  },
+  {
+    "id": "travel-a1-002",
+    "topic": "travel",
+    "level": "A1",
+    "vi": "Tôi cần một vé đến Hà Nội.",
+    "en": "I need one ticket to Hanoi.",
+    "ru": "Мне нужен один билет до Ханоя."
+  },
+  {
+    "id": "travel-a2-003",
+    "topic": "travel",
+    "level": "A2",
+    "vi": "Chúng tôi đã đặt phòng khách sạn cho ba đêm.",
+    "en": "We booked a hotel room for three nights.",
+    "ru": "Мы забронировали номер в отеле на три ночи."
+  },
+  {
+    "id": "travel-b1-004",
+    "topic": "travel",
+    "level": "B1",
+    "vi": "Nếu chuyến bay bị hoãn, tôi sẽ gọi cho khách sạn.",
+    "en": "If the flight is delayed, I will call the hotel.",
+    "ru": "Если рейс задержат, я позвоню в отель."
+  },
+  {
+    "id": "work-a1-001",
+    "topic": "work",
+    "level": "A1",
+    "vi": "Tôi làm việc ở văn phòng.",
+    "en": "I work in an office.",
+    "ru": "Я работаю в офисе."
+  },
+  {
+    "id": "work-a1-002",
+    "topic": "work",
+    "level": "A1",
+    "vi": "Cuộc họp bắt đầu lúc chín giờ.",
+    "en": "The meeting starts at nine o'clock.",
+    "ru": "Встреча начинается в девять часов."
+  },
+  {
+    "id": "work-a2-003",
+    "topic": "work",
+    "level": "A2",
+    "vi": "Đồng nghiệp của tôi gửi báo cáo vào thứ Sáu.",
+    "en": "My colleague sends the report on Friday.",
+    "ru": "Мой коллега отправляет отчет в пятницу."
+  },
+  {
+    "id": "work-b1-004",
+    "topic": "work",
+    "level": "B1",
+    "vi": "Trước khi trả lời email, tôi kiểm tra lại các con số.",
+    "en": "Before answering the email, I check the numbers again.",
+    "ru": "Перед тем как ответить на письмо, я снова проверяю цифры."
+  },
+  {
+    "id": "study-a1-001",
+    "topic": "study",
+    "level": "A1",
+    "vi": "Quyển sách này rất hữu ích.",
+    "en": "This book is very useful.",
+    "ru": "Эта книга очень полезная."
+  },
+  {
+    "id": "study-a1-002",
+    "topic": "study",
+    "level": "A1",
+    "vi": "Bạn có hiểu câu này không?",
+    "en": "Do you understand this sentence?",
+    "ru": "Ты понимаешь это предложение?"
+  },
+  {
+    "id": "study-a2-003",
+    "topic": "study",
+    "level": "A2",
+    "vi": "Giáo viên giải thích ngữ pháp bằng nhiều ví dụ.",
+    "en": "The teacher explains the grammar with many examples.",
+    "ru": "Учитель объясняет грамматику с помощью многих примеров."
+  },
+  {
+    "id": "study-b1-004",
+    "topic": "study",
+    "level": "B1",
+    "vi": "Khi tôi luyện nói thường xuyên, tôi nhớ từ vựng nhanh hơn.",
+    "en": "When I practice speaking regularly, I remember vocabulary faster.",
+    "ru": "Когда я регулярно тренирую разговорную речь, я быстрее запоминаю лексику."
+  },
+  {
+    "id": "culture-a1-001",
+    "topic": "culture",
+    "level": "A1",
+    "vi": "Bảo tàng mở cửa hôm nay.",
+    "en": "The museum is open today.",
+    "ru": "Музей сегодня открыт."
+  },
+  {
+    "id": "culture-a1-002",
+    "topic": "culture",
+    "level": "A1",
+    "vi": "Âm nhạc này rất đẹp.",
+    "en": "This music is very beautiful.",
+    "ru": "Эта музыка очень красивая."
+  },
+  {
+    "id": "culture-a2-003",
+    "topic": "culture",
+    "level": "A2",
+    "vi": "Tối nay họ biểu diễn một vở kịch nổi tiếng.",
+    "en": "Tonight they are performing a famous play.",
+    "ru": "Сегодня вечером они показывают известную пьесу."
+  },
+  {
+    "id": "culture-b1-004",
+    "topic": "culture",
+    "level": "B1",
+    "vi": "Triển lãm nhỏ này giới thiệu lịch sử của thành phố qua ảnh.",
+    "en": "This small exhibition presents the history of the city through photographs.",
+    "ru": "Эта небольшая выставка представляет историю города через фотографии."
+  }
+]
