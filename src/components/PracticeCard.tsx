@@ -9,6 +9,12 @@ const languageShortLabels: Record<LanguageCode, string> = {
   ru: "RU",
 };
 
+const languageDisplayLabels: Record<LanguageCode, string> = {
+  vi: "Vietnamese",
+  en: "English",
+  ru: "Russian",
+};
+
 function vietnameseTextClass(language: LanguageCode) {
   return language === "vi" ? "lang-vi" : "";
 }
@@ -23,6 +29,43 @@ type PracticeCardProps = {
   sourceLanguage: LanguageCode;
   targetLanguage: LanguageCode;
 };
+
+type TargetTicketCardProps = {
+  isRevealed: boolean;
+  targetLabel: string;
+  targetSentence: string;
+  targetSentenceClass: string;
+};
+
+function TargetTicketCard({
+  isRevealed,
+  targetLabel,
+  targetSentence,
+  targetSentenceClass,
+}: TargetTicketCardProps) {
+  return (
+    <aside className="target-ticket" aria-live="polite">
+      <div className="target-ticket__surface">
+        <span className="section-label">{targetLabel}</span>
+        {isRevealed ? (
+          <p className={`target-sentence ${targetSentenceClass}`}>
+            {targetSentence}
+          </p>
+        ) : (
+          <p className="target-sentence target-sentence--hidden">
+            Reveal the reference translation when you are ready.
+          </p>
+        )}
+        <div className="ornamental-divider ornamental-divider--target" aria-hidden="true" />
+
+        <p className="study-note">
+          Take your time. Look up words. Study the structure. Real learning
+          happens in the struggle.
+        </p>
+      </div>
+    </aside>
+  );
+}
 
 export function PracticeCard({
   deckSize,
@@ -65,6 +108,8 @@ export function PracticeCard({
   const sourceSentence = sentence[sourceLanguage];
   const targetSentence = sentence[targetLanguage];
   const progressLabel = `${Math.min(shownCount, deckSize)} / ${deckSize}`;
+  const sourceLabel = `Source (${languageDisplayLabels[sourceLanguage]})`;
+  const targetLabel = `Target (${languageDisplayLabels[targetLanguage]})`;
   const sourceSentenceClass = [
     "source-sentence",
     sourceSentence.length > 70 ? "source-sentence--long" : "",
@@ -84,40 +129,45 @@ export function PracticeCard({
         <span>{progressLabel}</span>
       </div>
 
-      <blockquote className={sourceSentenceClass}>{sourceSentence}</blockquote>
+      <div className="practice-card__grid">
+        <section className="source-column" aria-label="Source sentence">
+          <span className="section-label">{sourceLabel}</span>
+          <blockquote className={sourceSentenceClass}>{sourceSentence}</blockquote>
+          <div className="ornamental-divider" aria-hidden="true" />
 
-      <label className="answer-field">
-        <span>Your translation</span>
-        <textarea
-          className={answerClass}
-          value={answer}
-          onChange={(event) => setAnswer(event.target.value)}
-          placeholder="Write your answer before revealing the reference translation."
+          <label className="answer-field">
+            <span>Your translation</span>
+            <textarea
+              className={answerClass}
+              value={answer}
+              onChange={(event) => setAnswer(event.target.value)}
+              placeholder="Type your translation here..."
+            />
+          </label>
+
+          <div className="practice-card__actions">
+            <p>
+              {remainingInPass === 0
+                ? "Next reshuffles the filtered deck."
+                : `${remainingInPass} left before reshuffle.`}
+            </p>
+            <div>
+              <PaperButton onClick={() => setIsRevealed((current) => !current)}>
+                {isRevealed ? "Hide" : "Reveal"}
+              </PaperButton>
+              <PaperButton variant="secondary" onClick={handleNext}>
+                Next -&gt;
+              </PaperButton>
+            </div>
+          </div>
+        </section>
+
+        <TargetTicketCard
+          isRevealed={isRevealed}
+          targetLabel={targetLabel}
+          targetSentence={targetSentence}
+          targetSentenceClass={targetSentenceClass}
         />
-      </label>
-
-      {isRevealed ? (
-        <div className="reveal-panel" aria-live="polite">
-          <span>{languageShortLabels[targetLanguage]} reference</span>
-          <p className={targetSentenceClass}>{targetSentence}</p>
-        </div>
-      ) : null}
-
-      <div className="practice-card__actions">
-        <p>
-          {remainingInPass === 0
-            ? "Next reshuffles the filtered deck."
-            : `${remainingInPass} left before reshuffle.`}
-        </p>
-        <div>
-          <PaperButton
-            variant="secondary"
-            onClick={() => setIsRevealed((current) => !current)}
-          >
-            {isRevealed ? "Hide" : "Reveal"}
-          </PaperButton>
-          <PaperButton onClick={handleNext}>Next</PaperButton>
-        </div>
       </div>
     </PaperPanel>
   );
