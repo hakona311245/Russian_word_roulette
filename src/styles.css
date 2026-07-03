@@ -41,6 +41,18 @@
   box-sizing: border-box;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 body {
   margin: 0;
   min-width: 320px;
@@ -755,6 +767,17 @@ textarea {
   line-height: 1.12;
 }
 
+.source-sentence--tegaki {
+  font-family: inherit;
+}
+
+.source-sentence__tegaki-renderer {
+  display: block;
+  max-width: 100%;
+  color: currentColor;
+  font: inherit;
+}
+
 .ornamental-divider {
   position: relative;
   width: 100%;
@@ -979,6 +1002,169 @@ textarea {
   background: rgba(240, 233, 191, 0.5);
 }
 
+.tegaki-preview-shell {
+  display: grid;
+  gap: 22px;
+  width: min(1480px, calc(100% - 40px));
+  min-height: calc(100dvh - 40px);
+  margin: 20px auto;
+  padding: 0;
+}
+
+.tegaki-preview-header {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px clamp(18px, 2.2vw, 28px);
+  background:
+    linear-gradient(135deg, rgba(248, 240, 199, 0.96), rgba(240, 233, 191, 0.84)),
+    linear-gradient(90deg, rgba(195, 64, 64, 0.12), transparent 34%),
+    var(--surface-gallery);
+  border: 1px solid rgba(240, 233, 191, 0.42);
+  border-radius: var(--radius-panel);
+  box-shadow:
+    0 22px 70px rgba(63, 25, 19, 0.22),
+    inset 0 1px 0 rgba(255, 249, 218, 0.78);
+}
+
+.tegaki-preview-header h1 {
+  margin: 0;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.85rem, 3vw, 2.8rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+.tegaki-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+.tegaki-preview-card {
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+  padding: clamp(18px, 2vw, 24px);
+  background:
+    linear-gradient(rgba(85, 69, 45, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(85, 69, 45, 0.02) 1px, transparent 1px),
+    radial-gradient(circle at 100% 0%, rgba(216, 153, 89, 0.14), transparent 14rem),
+    var(--surface-gallery);
+  background-size:
+    34px 34px,
+    34px 34px,
+    auto,
+    auto;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-panel);
+  box-shadow:
+    0 22px 64px rgba(70, 32, 21, 0.16),
+    inset 0 1px 0 rgba(255, 249, 218, 0.7);
+}
+
+.tegaki-preview-card__header {
+  display: grid;
+  gap: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.tegaki-preview-card__eyebrow {
+  margin: 0 0 5px;
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.tegaki-preview-card h2 {
+  margin: 0;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.55rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.tegaki-preview-card dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0;
+}
+
+.tegaki-preview-card dt,
+.tegaki-preview-card h3 {
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.tegaki-preview-card dt,
+.tegaki-preview-card dd {
+  margin: 0;
+}
+
+.tegaki-preview-card dd {
+  margin-top: 3px;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.tegaki-preview-card__error {
+  margin: 0;
+  padding: 10px 12px;
+  color: var(--accent-strong);
+  background: rgba(195, 64, 64, 0.1);
+  border: 1px solid rgba(195, 64, 64, 0.18);
+  border-radius: var(--radius-control);
+  font-size: 0.9rem;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.tegaki-preview-card__samples {
+  display: grid;
+  gap: 18px;
+}
+
+.tegaki-preview-card__samples section {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+}
+
+.tegaki-preview-card h3 {
+  margin: 0;
+}
+
+.tegaki-preview__sample,
+.tegaki-preview__static-sample {
+  min-height: 2.65rem;
+  margin: 0;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.32rem, 1.45vw, 1.7rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.tegaki-preview__renderer {
+  display: block;
+  max-width: 100%;
+  color: currentColor;
+  font: inherit;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .app-shell,
   .study-header,
@@ -1000,7 +1186,9 @@ textarea {
   .intro-frame,
   .intro-star,
   .intro-message__text,
-  .intro-particle {
+  .intro-particle,
+  .tegaki-preview-card,
+  .tegaki-preview__renderer {
     animation: none;
     transition: none;
   }
@@ -1082,6 +1270,15 @@ textarea {
 
   .practice-card__grid {
     grid-template-columns: 1fr;
+  }
+
+  .tegaki-preview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tegaki-preview-header {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .target-ticket {

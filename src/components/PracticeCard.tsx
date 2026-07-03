@@ -8,6 +8,7 @@ import {
 import { animate, createTimeline } from "animejs";
 import type { LanguageCode, Sentence } from "../types";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
+import { HandwrittenSourceSentence } from "./HandwrittenSourceSentence";
 import { PaperButton } from "./PaperButton";
 import { PaperPanel } from "./PaperPanel";
 
@@ -287,9 +288,14 @@ export function PracticeCard({
       <div className="practice-card__grid">
         <section className="source-column" aria-label="Source sentence">
           <span className="section-label">{sourceLabel}</span>
-          <blockquote className={sourceSentenceClass} ref={sourceSentenceRef}>
-            {sourceSentence}
-          </blockquote>
+          <HandwrittenSourceSentence
+            className={sourceSentenceClass}
+            language={sourceLanguage}
+            reducedMotion={prefersReducedMotion}
+            ref={sourceSentenceRef}
+            sentenceId={sentence.id}
+            text={sourceSentence}
+          />
           <div
             className="ornamental-divider"
             aria-hidden="true"

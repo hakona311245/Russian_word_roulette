@@ -1,4 +1,11 @@
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { createScope, createTimeline, stagger } from "animejs";
 import { DeckProgress } from "./components/DeckProgress";
 import { FilterBar } from "./components/FilterBar";
@@ -9,6 +16,15 @@ import { usePrefersReducedMotion } from "./hooks/usePrefersReducedMotion";
 
 const INTRO_PLAY_MODE: "session" | "always" = "session";
 const INTRO_STORAGE_KEY = "russian-word-roulette:intro-seen";
+const SHOW_TEGAKI_FONT_PREVIEW = true;
+
+const LazyTegakiFontCandidatePreview = SHOW_TEGAKI_FONT_PREVIEW
+  ? lazy(() =>
+      import("./components/TegakiFontCandidatePreview").then((module) => ({
+        default: module.TegakiFontCandidatePreview,
+      })),
+    )
+  : null;
 
 function shouldShowIntroOnLoad() {
   if (INTRO_PLAY_MODE === "always") {
@@ -124,6 +140,20 @@ export default function App() {
 
     setShowIntro(false);
   }, []);
+
+  if (LazyTegakiFontCandidatePreview) {
+    return (
+      <Suspense
+        fallback={
+          <main className="tegaki-preview-shell">
+            <p className="status-line">Loading Tegaki font preview...</p>
+          </main>
+        }
+      >
+        <LazyTegakiFontCandidatePreview />
+      </Suspense>
+    );
+  }
 
   return (
     <>
