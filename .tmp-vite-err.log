@@ -1,0 +1,10 @@
+[2m5:18:40 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [33mwarning: [33mDuplicate key "duration" in object literal[33m
+264|  
+265|        duration: 420,
+266|        duration: 260,
+   |        ^
+267|        ease: "outSine"
+268|      });
+[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mD:/Coding/Russian_word_roulette/src/components/PracticeCard.tsx[39m
