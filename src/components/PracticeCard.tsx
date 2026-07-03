@@ -8,19 +8,14 @@ import {
 import { animate, createTimeline } from "animejs";
 import type { LanguageCode, Sentence } from "../types";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
+import {
+  languageDisplayLabels,
+  sourceSentenceClassName,
+  vietnameseTextClass,
+} from "../lib/languageDisplay";
 import { HandwrittenSourceSentence } from "./HandwrittenSourceSentence";
 import { PaperButton } from "./PaperButton";
 import { PaperPanel } from "./PaperPanel";
-
-const languageDisplayLabels: Record<LanguageCode, string> = {
-  vi: "Vietnamese",
-  en: "English",
-  ru: "Russian",
-};
-
-function vietnameseTextClass(language: LanguageCode) {
-  return language === "vi" ? "lang-vi" : "";
-}
 
 type PracticeCardProps = {
   isLoading: boolean;
@@ -273,13 +268,10 @@ export function PracticeCard({
   const targetSentence = sentence[targetLanguage];
   const sourceLabel = `Source (${languageDisplayLabels[sourceLanguage]})`;
   const targetLabel = `Target (${languageDisplayLabels[targetLanguage]})`;
-  const sourceSentenceClass = [
-    "source-sentence",
-    sourceSentence.length > 70 ? "source-sentence--long" : "",
-    vietnameseTextClass(sourceLanguage),
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const sourceSentenceClass = sourceSentenceClassName(
+    sourceLanguage,
+    sourceSentence,
+  );
   const targetSentenceClass = vietnameseTextClass(targetLanguage);
   const answerClass = targetLanguage === "vi" ? "answer-field__textarea--vi" : "";
 

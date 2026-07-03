@@ -11,12 +11,15 @@ import { DeckProgress } from "./components/DeckProgress";
 import { FilterBar } from "./components/FilterBar";
 import { IntroLoader } from "./components/IntroLoader";
 import { PracticeCard } from "./components/PracticeCard";
+import { PracticeModeSwitch } from "./components/PracticeModeSwitch";
+import { SpeakingPracticeCard } from "./components/SpeakingPracticeCard";
 import { useSentenceDeck } from "./hooks/useSentenceDeck";
 import { usePrefersReducedMotion } from "./hooks/usePrefersReducedMotion";
+import type { PracticeMode } from "./types";
 
 const INTRO_PLAY_MODE: "session" | "always" = "session";
 const INTRO_STORAGE_KEY = "russian-word-roulette:intro-seen";
-const SHOW_TEGAKI_FONT_PREVIEW = true;
+const SHOW_TEGAKI_FONT_PREVIEW = false;
 
 const LazyTegakiFontCandidatePreview = SHOW_TEGAKI_FONT_PREVIEW
   ? lazy(() =>
@@ -47,6 +50,7 @@ export default function App() {
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const titleUnderlineRef = useRef<SVGPathElement | null>(null);
   const [showIntro, setShowIntro] = useState(shouldShowIntroOnLoad);
+  const [practiceMode, setPracticeMode] = useState<PracticeMode>("typing");
   const prefersReducedMotion = usePrefersReducedMotion();
   const {
     currentSentence,
@@ -208,6 +212,10 @@ export default function App() {
 
         <div className="study-layout">
           <section className="control-rail" aria-label="Practice setup">
+            <PracticeModeSwitch
+              mode={practiceMode}
+              onChange={setPracticeMode}
+            />
             <FilterBar
               filters={filters}
               levels={levels}
@@ -219,14 +227,25 @@ export default function App() {
           <section className="practice-workspace" aria-label="Practice workspace">
             {error ? <p className="error-message">{error}</p> : null}
 
-            <PracticeCard
-              isLoading={isLoading}
-              onNext={nextSentence}
-              remainingInPass={remainingInPass}
-              sentence={currentSentence}
-              sourceLanguage={filters.sourceLanguage}
-              targetLanguage={filters.targetLanguage}
-            />
+            {practiceMode === "typing" ? (
+              <PracticeCard
+                isLoading={isLoading}
+                onNext={nextSentence}
+                remainingInPass={remainingInPass}
+                sentence={currentSentence}
+                sourceLanguage={filters.sourceLanguage}
+                targetLanguage={filters.targetLanguage}
+              />
+            ) : (
+              <SpeakingPracticeCard
+                isLoading={isLoading}
+                onNext={nextSentence}
+                remainingInPass={remainingInPass}
+                sentence={currentSentence}
+                sourceLanguage={filters.sourceLanguage}
+                targetLanguage={filters.targetLanguage}
+              />
+            )}
           </section>
         </div>
       </main>

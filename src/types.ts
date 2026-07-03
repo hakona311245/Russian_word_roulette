@@ -1,5 +1,7 @@
 export type LanguageCode = "vi" | "en" | "ru";
 
+export type PracticeMode = "typing" | "speaking";
+
 export type Level = "A1" | "A2" | "B1";
 
 export type Topic =
